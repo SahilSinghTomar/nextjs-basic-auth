@@ -6,10 +6,11 @@ import Link from 'next/link';
 
 const VerifyEmail = () => {
   const searchParams = useSearchParams();
-  const [token, setToken] = useState('');
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const token = searchParams.get('token') || '';
 
   const verifyUserEmail = async () => {
     try {
@@ -26,11 +27,11 @@ const VerifyEmail = () => {
     }
   };
 
-  useEffect(() => {
-    const urlToken = searchParams.get('token');
-    console.log(urlToken);
-    setToken(urlToken || '');
-  }, [searchParams]);
+  // useEffect(() => {
+  //   const urlToken = searchParams.get('token');
+  //   console.log(urlToken);
+  //   setToken(urlToken || '');
+  // }, [searchParams]);
 
   if (verified) {
     return (
@@ -54,6 +55,7 @@ const VerifyEmail = () => {
   justify-center min-h-screen py-2"
     >
       <h1 className="text-4xl">{loading ? 'Processing' : 'Verify Email'}</h1>
+      <h2>{token}</h2>
       <button
         disabled={loading || verified}
         className="p-2 border border-gray-300
