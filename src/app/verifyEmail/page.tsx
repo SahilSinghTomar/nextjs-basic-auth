@@ -1,16 +1,13 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 const VerifyEmail = () => {
-  const searchParams = useSearchParams();
   const [verified, setVerified] = useState(false);
+  const [token, setToken] = useState('');
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const token = searchParams.get('token') || '';
 
   const verifyUserEmail = async () => {
     try {
@@ -27,11 +24,14 @@ const VerifyEmail = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const urlToken = searchParams.get('token');
-  //   console.log(urlToken);
-  //   setToken(urlToken || '');
-  // }, [searchParams]);
+  useEffect(() => {
+    const urlToken = window.location.search.split('=')[1];
+    setToken(urlToken || '');
+
+    // const { query } = router;
+    // const urlToken = query.token;
+    // setToken((urlToken as string) || '');
+  }, []);
 
   if (verified) {
     return (
